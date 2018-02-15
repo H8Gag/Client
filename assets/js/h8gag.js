@@ -24,6 +24,7 @@ window.fbAsyncInit = function () {
 }(document, 'script', 'facebook-jssdk'));
 
 function checkLoginState() {
+  
   FB.getLoginStatus(function (response) {
     if (response.status === 'connected') {
       localStorage.accessToken = response.authResponse.accessToken
@@ -46,6 +47,7 @@ function sendTokenToServer(tokenFB) {
     $('#uploadBtn').show()
     $('#loginBtn').html(`Logout <i class="icon-logout"></i>`)
     localStorage.token = resp.data.jwt
+  
   })
   .catch(err => {
     console.log(err.message);
@@ -59,18 +61,20 @@ var app = new Vue({
     posting: {
       image : '',
       title : '',
-    }
+    },
+    loggedin: '',
   },
-
-  created() {
+  created(){
     this.getPosts()
   },
 
   methods: {
+  
     getPosts() {
       axios.get(serverAPI + '/posts')
       .then(resp => {
-        this.posts = resp.data.data
+        return this.posts = resp.data.data
+
       })
     },
     submitMeme(){
@@ -112,27 +116,15 @@ var app = new Vue({
               self.posts[i].score +=2
             }
               self.posts[i].score--
+              swal('Yatta!', "your vote has been added!", "success")
+          }else{
+            swal("Failed!!", "U c4nT vote 2ice mthfckr!!! \n or you just haven't logged in yet :)", "error")
           }
-
-          // self.posts.forEach(el=>{
-          //   if(el.id == post.id){
-          //     el.score = response.data.data.score
-          //   }
-          // // })
-          // console.log(response);
         })
         .catch(function (error) {
           console.log(error);
         });
-    },
-
-      // submitData() {
-      //   console.log('POSTING: ', JSON.stringify(this.posting));
-      //   this.$http.post(serverAPI + '/posts', headers:{ token })
-      //   .then(resp => {
-      //     console.log(resp);
-      //   })
-      // }
-  },
+    }
+  }
 
 })

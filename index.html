@@ -27,6 +27,8 @@
 			});
 		});
 	</script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- <script src="assets/js/vue.js"></script> -->
 </head>
 <body>
   <div id="app-h8gag">
@@ -55,7 +57,7 @@
   				<div class="col-md-12">
             <a href="#" id="loginBtn" class="fh5co-menu-btn"data-toggle="modal" data-target="#modal-login">login <i class="icon-login"></i></a>
   					<a href="#" id="uploadBtn" class="fh5co-menu-btn js-fh5co-menu-btn" style="display:none;">Upload <i class="icon-upload"></i></a>
-  					<a class="navbar-brand" href="/">H8Gag Meme</a>
+  					<a class="navbar-brand" href="/">H8Gag</a>
   				</div>
   			</div>
   		</div>
@@ -83,7 +85,6 @@
   		<div class="container">
   			<div id="gallery" class="row" v-for="(post, i) in posts">
           <!-- board gallery -->
-
 					<div class="card">
 				  	<a :href="post.image">
 			        <div class="card-image">
