@@ -15,9 +15,9 @@
 	<link rel="stylesheet" href="assets/css/salvattore.css">
 	<link rel="stylesheet" href="assets/css/style-h8gag.css">
 	<script src="assets/js/modernizr-2.6.2.min.js"></script>
-  <script src="assets/js/axios.min.js"></script>
-  <script src="assets/js/vue.js"></script>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script> -->
+	<script src="assets/js/axios.min.js"></script>
+	<script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
+  <!-- <script src="assets/js/vue.js"></script> -->
 </head>
 <body>
   <div id="app-h8gag">
@@ -74,7 +74,7 @@
   		<div class="container">
   			<div class="row">
           <!-- board gallery -->
-          <div id="fh5co-board" data-columns v-for="post in posts">
+          <div id="fh5co-board" data-columns v-for="(post, i) in posts">
               <div class="item">
             		<!-- <div class="animate-box"> -->
     	        		<a :href="post.image" class="image-popup fh5co-board-img">
@@ -82,7 +82,8 @@
                   </a>
     	        		<div class="fh5co-desc">
 										{{ post.title }}
-										<br><i class="icon-emoji-happy">{{ post.votersArray.count }}</i>
+										<br><i @click="votes(post,'up',i)" class="icon-emoji-happy"></i>
+										<i @click="votes(post,'down',i)" class="icon-emoji-sad">{{ post.votersArray.count }}</i> <small class="text-right"> &nbsp;&nbsp; Points : {{ post.score }}</small> 
 									</div>
             		<!-- </div> -->
             	</div>

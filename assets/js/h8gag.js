@@ -1,4 +1,5 @@
 const serverAPI = 'http://h8.awtian.com:3000'
+// const serverAPI = 'http://localhost:3000'
 
 window.fbAsyncInit = function () {
   FB.init({
@@ -82,8 +83,46 @@ var app = new Vue({
       })
       .catch(err => {
         console.log(err);
+    votes(post,status,i){
+      let self = this
+      console.log(status)
+      console.log('masuk sini')
+      axios.put(`http://localhost:3000/posts/${post._id}`, {
+        status: status
+      },{
+        headers:{
+          token:localStorage.getItem('token')
+        }
       })
-    }
-  }
+        .then(function (response) {
+          console.log(response)
+          console.log(status)
+          if(response.data.add === true) {
+            if (status === 'up') {
+              self.posts[i].score +=2
+            }
+              self.posts[i].score--
+          }
+
+          // self.posts.forEach(el=>{
+          //   if(el.id == post.id){
+          //     el.score = response.data.data.score
+          //   }
+          // // })
+          // console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    
+      // submitData() {
+      //   console.log('POSTING: ', JSON.stringify(this.posting));
+      //   this.$http.post(serverAPI + '/posts', headers:{ token })
+      //   .then(resp => {
+      //     console.log(resp);
+      //   })
+      // }
+  },
 
 })
