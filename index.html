@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>H8Gag &mdash; Group Project</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<!-- <link rel="stylesheet" href="assets/css/bootstrap.css"> -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<link rel="stylesheet" href="assets/css/icomoon.css">
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="assets/css/salvattore.css">
+	<link rel="stylesheet" href="assets/css/style-h8gag.css">
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.poptrox.js"></script>
+	<script src="assets/js/modernizr-2.6.2.min.js"></script>
+	<script src="assets/js/axios.min.js"></script>
+	<script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
+	<script>
+		$(function() {
+			var foo = $('#gallery');
+			foo.poptrox({
+				usePopupCaption: true
+			});
+		});
+	</script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- <script src="assets/js/vue.js"></script> -->
+</head>
+<body>
+  <div id="app-h8gag">
+    <div id="fh5co-offcanvass">
+  		<a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Close <i class="icon-cross"></i> </a>
+  		<!-- <h1 class="fh5co-logo"></h1> -->
+			<div class="fh5co-spacer fh5co-spacer-xs"></div>
+  		<ul>
+  			<li class="active"><h4>H8Gag Meme Upload</h4></li>
+  		</ul>
+			<form method="post" encType="multipart/form-data" class="form-horizontal" id="validate-form">
+	      <div id="display_photo" class="uploader text-center" onclick="uploadImage(this.id)">
+	        <i class="icon-upload"></i>
+	        <p>Click here to select image</p>
+	      </div>
+	      <input type="file" id="image" accept="image/*" style="display:none;" data-style="fileinput">
+				<div class="fh5co-spacer fh5co-spacer-xs"></div>
+				<input type="text" id="memetitle" class="form-control" placeholder="Title Meme..">
+				<div class="fh5co-spacer fh5co-spacer-xs"></div>
+				<input type="button" class="btn btn-block btn-sm btn-primary" value="Try To Save" @click="submitMeme()">
+			</form>
+  	</div>
+  	<header id="fh5co-header" role="banner" class="position-fixed">
+  		<div class="container">
+  			<div class="row">
+  				<div class="col-md-12">
+            <a href="#" id="loginBtn" class="fh5co-menu-btn"data-toggle="modal" data-target="#modal-login">login <i class="icon-login"></i></a>
+  					<a href="#" id="uploadBtn" class="fh5co-menu-btn js-fh5co-menu-btn" style="display:none;">Upload <i class="icon-upload"></i></a>
+  					<a class="navbar-brand" href="/">H8Gag</a>
+  				</div>
+  			</div>
+  		</div>
+  	</header>
+  	<!-- END .header -->
+
+    <!-- modal login -->
+    <div class="modal fade" id="modal-login">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Login</h4>
+          </div>
+          <div class="modal-body">
+						<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true"
+						 data-use-continue-as="false" onlogin="checkLoginState()" scope="public_profile,email,user_likes" data-dismiss="modal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  	<div id="fh5co-main">
+  		<div class="container">
+  			<div id="gallery" class="row" v-for="(post, i) in posts">
+          <!-- board gallery -->
+					<div class="card">
+				  	<a :href="post.image">
+			        <div class="card-image">
+		            <img :src="post.image" :alt="post.title"/>
+			        </div>
+						</a>
+		        <div class="card-body">
+	            <div class="card-date">
+                <time>
+									<i @click="votes(post,'up',i)" class="icon-emoji-happy"></i>
+									<i @click="votes(post,'down',i)" class="icon-emoji-sad"></i> <small class="text-right"> &nbsp;&nbsp; Points : {{ post.score }}</small>
+								</time>
+	            </div>
+	            <div class="card-title">
+                <h3>{{ post.title }}</h3>
+	            </div>
+	            <div class="card-exceprt">
+                <p></p>
+	            </div>
+		        </div>
+					</div>
+					<div class="fh5co-spacer fh5co-spacer-xs"></div>
+          <!-- end board gallery -->
+        </div>
+      </div>
+  	</div>
+
+  	<footer id="fh5co-footer">
+  		<div class="container">
+  			<div class="row row-padded">
+  				<div class="col-md-12 text-center">
+  					<p><small>&copy; 2018 H8Gag Team. All Rights Reserved.
+							<br>Project GitHub: <a href="https://github.com/H8Gag" target="_blank"><i class="icon-github-with-circle"></i> H8Gag</a></small>
+						</p>
+  				</div>
+  			</div>
+  		</div>
+  	</footer>
+  </div>
+
+
+
+	<script src="assets/js/jquery.easing.1.3.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/jquery.waypoints.min.js"></script>
+	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="assets/js/salvattore.min.js"></script>
+	<script src="assets/js/main.js"></script>
+  <script src="assets/js/h8gag.js"></script>
+
+	<script>
+		function uploadImage(id) {
+			$('#image').click()
+			document.getElementById('image').addEventListener('change', diplayPhoto, false);
+
+			function diplayPhoto(e) {
+				let reader = new FileReader();
+				reader.onload = function (event) {
+					$('#' + id).html( '<img height="146px" src="' + event.target.result + '"/>' );
+				}
+				reader.readAsDataURL(e.target.files[0]);
+			}
+		}
+	</script>
+</body>
+</html>
