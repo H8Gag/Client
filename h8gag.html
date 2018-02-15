@@ -1,178 +1,96 @@
-<!DOCTYPE html>
-<html class="no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>H8Gag &mdash; Group Project</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-	<!-- <link rel="stylesheet" href="assets/css/bootstrap.css"> -->
-	<link rel="stylesheet" href="assets/css/animate.css">
-	<link rel="stylesheet" href="assets/css/icomoon.css">
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="assets/css/salvattore.css">
-	<link rel="stylesheet" href="assets/css/style-h8gag.css">
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>H8Gag</title>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="assets/js/axios.min.js"></script>
+	  <script src="assets/js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app-h8gag">
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-	<link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
-  <link rel="stylesheet" type="text/css" href="assets/css/style_common.css" />
-  <link rel="stylesheet" type="text/css" href="assets/css/style1.css" />
+				<!-- Header -->
+					<header id="header">
+						<!-- <span class="avatar"><img src="assets/imgs/user.png" alt="" /></span> -->
+						<h1>H8<strong>G@g</strong></h1>
+						<!-- <ul class="icons">
+							<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
+							<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
+						</ul> -->
+					</header>
 
-	<script src="assets/js/modernizr-2.6.2.min.js"></script>
-  <script src="assets/js/axios.min.js"></script>
-  <script src="assets/js/vue.js"></script>
-</head>
-<body>
-  <div id="app-h8gag">
-    <div id="fh5co-offcanvass">
-  		<a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Close <i class="icon-cross"></i> </a>
-  		<!-- <h1 class="fh5co-logo"></h1> -->
-			<div class="fh5co-spacer fh5co-spacer-xs"></div>
-  		<ul>
-  			<li class="active"><h4>H8Gag Meme Upload</h4></li>
-  		</ul>
-			<form method="post" encType="multipart/form-data" class="form-horizontal" id="validate-form">
-	      <div id="display_photo" class="uploader text-center" onclick="uploadImage(this.id)">
-	        <i class="icon-upload"></i>
-	        <p>Click here to select image</p>
-	      </div>
-	      <input type="file" id="image" accept="image/*" style="display:none;" data-style="fileinput">
-				<div class="fh5co-spacer fh5co-spacer-xs"></div>
-				<input type="text" id="memetitle" class="form-control" placeholder="Title Meme..">
-				<div class="fh5co-spacer fh5co-spacer-xs"></div>
-				<input type="button" class="btn btn-block btn-sm btn-primary" value="Try To Save" @click="submitMeme()">
-			</form>
-  	</div>
-  	<header id="fh5co-header" role="banner" class="position-fixed">
-  		<div class="container">
-  			<div class="row">
-  				<div class="col-md-12">
-            <a href="#" class="fh5co-menu-btn"data-toggle="modal" data-target="#modal-login">login <i class="icon-login"></i></a>
-  					<a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">Upload <i class="icon-upload"></i></a>
-  					<a class="navbar-brand" href="/">H8Gag Meme</a>
-  				</div>
-  			</div>
-  		</div>
-  	</header>
-  	<!-- END .header -->
+				<!-- Main -->
+					<section id="main">
+						<!-- Thumbnails -->
+							<!-- <section class="thumbnails" v-for="post in posts"	>
+								<div>
+									<a :href="post.image">
+										<img :src="post.image" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+							</section> -->
 
-    <!-- modal login -->
-    <div class="modal fade" id="modal-login">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Login</h4>
-          </div>
-          <div class="modal-body">
-						<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true"
-						 data-use-continue-as="false" onlogin="checkLoginState()" scope="public_profile,email,user_likes" data-dismiss="modal"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  	<div id="fh5co-main">
-  		<div class="container">
-  			<div class="row">
-          <!-- board gallery -->
-
-					<div id="grid" class="main" v-for="post in posts">
-						<div class="view">
-							<div class="view-back">
-								<span data-icon="A">566</span>
-								<span data-icon="B">124</span>
-								<a href="http://www.flickr.com/photos/ag2r/5439506585/in/photostream">&rarr;</a>
-							</div>
-							<img :src="post.image" />
-						</div>
-					</div>
-
-					<!-- <div class="content">
-						<div class="grid" v-for="post in posts">
-							<figure class="effect-zoe">
-								<img :src="post.image" :alt="post.title"/>
-								<figcaption>
-									<h4>{{ post.title }}</h4>
-									<p class="icon-links">
-										<a href="#"><span class="icon-heart"></span></a>
-										<a href="#"><span class="icon-eye"></span></a>
-										<a href="#"><span class="icon-paper-clip"></span></a>
-									</p>
-								</figcaption>
-							</figure>
-						</div>
-					</div> -->
-
-          <!-- <div id="fh5co-board" v-for="post in posts">
-              <div class="item">
-            		<div class="animate-box">
-    	        		<a :href="post.image" class="image-popup fh5co-board-img">
-                    <img :src="post.image" alt="">
-                  </a>
-    	        		<div class="fh5co-desc">
-										{{ post.title }}
-										<br><i class="icon-emoji-happy">{{ post.votersArray.count }}</i>
+							<section class="thumbnails">
+								<div>
+									<div>
+										<a href="assets/imgs/img_11.jpg">
+											<img src="assets/imgs/img_11.jpg" alt="" />
+										</a>
+										<h3>Lorem ipsum dolor sit amet</h3>
 									</div>
-            		</div>
-            	</div>
-          </div> -->
 
-          <!-- end board gallery -->
-        </div>
-      </div>
-  	</div>
+									<a href="assets/imgs/img_11.jpg">
+										<img src="assets/imgs/img_11.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+								<div>
+									<a href="assets/imgs/img_11.jpg">
+										<img src="assets/imgs/img_11.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="assets/imgs/img_11.jpg">
+										<img src="assets/imgs/img_11.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="assets/imgs/img_11.jpg">
+										<img src="assets/imgs/img_11.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+								<div>
+									<a href="assets/imgs/img_11.jpg">
+										<img src="assets/imgs/img_11.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="assets/imgs/img_11.jpg">
+										<img src="assets/imgs/img_11.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+							</section>
+					</section>
 
-  	<footer id="fh5co-footer">
-  		<div class="container">
-  			<div class="row row-padded">
-  				<div class="col-md-12 text-center">
-  					<p><small>&copy; 2018 H8Gag Team. All Rights Reserved.
-							<br>Project GitHub: <a href="https://github.com/H8Gag" target="_blank"><i class="icon-github-with-circle"></i> H8Gag</a></small>
-						</p>
-  				</div>
-  			</div>
-  		</div>
-  	</footer>
-  </div>
+				<!-- Footer -->
+					<footer id="footer">
+						<p>&copy; Untitled. All rights reserved. Design: <a href="http://templated.co">TEMPLATED</a>. Demo assets/imgs: <a href="http://unsplash.com">Unsplash</a>.</p>
+					</footer>
 
-
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.easing.1.3.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/jquery.waypoints.min.js"></script>
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
-	<script src="assets/js/salvattore.min.js"></script>
-	<script src="assets/js/main.js"></script>
-  <script src="assets/js/h8gag.js"></script>
-	<script>
-		function uploadImage(id) {
-			$('#image').click()
-			document.getElementById('image').addEventListener('change', diplayPhoto, false);
-
-			function diplayPhoto(e) {
-				let reader = new FileReader();
-				reader.onload = function (event) {
-					$('#' + id).html( '<img height="146px" src="' + event.target.result + '"/>' );
-				}
-				reader.readAsDataURL(e.target.files[0]);
-			}
-		}
-
-		Modernizr.load({
-			test: Modernizr.csstransforms3d && Modernizr.csstransitions,
-			yep : ['http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js','js/jquery.hoverfold.js'],
-			nope: 'css/fallback.css',
-			callback : function( url, result, key ) {
-
-				if( url === 'js/jquery.hoverfold.js' ) {
-			$( '#grid' ).hoverfold();
-				}
-
-			}
-		});
-	</script>
-</body>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min-h8gag.js"></script>
+		<script src="assets/js/jquery.poptrox.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/main-h8gag.js"></script>
+		<script src="assets/js/h8gag.js"></script>
+	</body>
 </html>

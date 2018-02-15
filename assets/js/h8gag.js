@@ -2,6 +2,10 @@ const serverAPI = 'http://h8.awtian.com:3000'
 // const serverAPI = 'http://localhost:3000'
 
 window.fbAsyncInit = function () {
+  if (localStorage.accessToken) {
+    $('#uploadBtn').show()
+    $('#loginBtn').html(`Logout <i class="icon-logout"></i>`)
+  }
   FB.init({
     appId: '389643448127142',
     // cookie: true,
@@ -27,9 +31,11 @@ function checkLoginState() {
       sendTokenToServer(localStorage.accessToken);
     }
     else {
+      $('#uploadBtn').hide()
+      $('#loginBtn').html(`Login <i class="icon-login"></i>`)
       localStorage.removeItem("accessToken")
       localStorage.removeItem("userId")
-      localStorage.removeItem("jwt")
+      localStorage.removeItem("token")
     }
   });
 };
@@ -37,6 +43,8 @@ function checkLoginState() {
 function sendTokenToServer(tokenFB) {
   axios.post(serverAPI + '/user', {token: tokenFB})
   .then(resp => {
+    $('#uploadBtn').show()
+    $('#loginBtn').html(`Logout <i class="icon-logout"></i>`)
     localStorage.token = resp.data.jwt
   })
   .catch(err => {
@@ -83,6 +91,8 @@ var app = new Vue({
       })
       .catch(err => {
         console.log(err);
+      })
+    },
     votes(post,status,i){
       let self = this
       console.log(status)
@@ -115,7 +125,7 @@ var app = new Vue({
           console.log(error);
         });
     },
-    
+
       // submitData() {
       //   console.log('POSTING: ', JSON.stringify(this.posting));
       //   this.$http.post(serverAPI + '/posts', headers:{ token })
