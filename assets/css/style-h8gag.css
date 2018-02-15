@@ -8408,7 +8408,8 @@ a > img.fh5co-align-center {
 	/* filter: grayscale(0); */
 }
 .card-image {
-	height: 350px;
+  min-height:300px;
+  min-width: 350px;
 	position: relative;
 	overflow: hidden;
     background-size: cover;
