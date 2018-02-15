@@ -94,8 +94,6 @@
 		animateBoxWayPoint();
 	});
 
-	
-
 
 	// var $panel = $('#modal-login');
 	// var maxY = 20,
