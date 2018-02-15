@@ -49,7 +49,7 @@ var app = new Vue({
     posts: [],
     posting: {
       image : '',
-      title : ''
+      title : '',
     }
   },
 
@@ -64,11 +64,24 @@ var app = new Vue({
         this.posts = resp.data.data
       })
     },
-    submitData() {
-      console.log('POSTING: ', JSON.stringify(this.posting));
-      this.$http.post(serverAPI + '/posts', headers:{ token })
+    submitMeme(){
+      var memetitle = $('#memetitle').val()
+      var data = new FormData();
+      data.append('title', memetitle)
+      data.append('image', document.getElementById('image').files[0])
+
+      axios.post(serverAPI+ '/posts',
+      data,
+      {headers: {
+        "Content-Type" : "multipart/form-data",
+        "token": localStorage.token
+      }})
       .then(resp => {
-        console.log(resp);
+        this.getPosts()
+        console.log('success posting');
+      })
+      .catch(err => {
+        console.log(err);
       })
     }
   }
